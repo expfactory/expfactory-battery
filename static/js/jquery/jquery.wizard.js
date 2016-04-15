@@ -99,9 +99,9 @@ $.widget( "kf." + wizard, {
 		unidirectional: false,
 
 		/* callbacks */
-		afterBackward: null,
+		afterBackward: function() {$('.experiment-layout').scrollTop(0)},
 		afterDestroy: null,
-		afterForward: null,
+		afterForward: function() {$('.experiment-layout').scrollTop(0)},
 		afterSelect: null,
 		beforeBackward: null,
 		beforeDestroy: null,
