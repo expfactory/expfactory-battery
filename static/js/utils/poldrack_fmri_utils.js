@@ -74,12 +74,10 @@ var create_trigger_block = function(trigger) {
 }
 
 // test response keys
-var create_key_test_block = function(choice, keycode_lookup = {}) {
-	if (Object.keys(keycode_lookup).length == 0) {
-		keycode_lookup = {'B': 'thumb', 'Y': 'index finger', 'G': 'middle finger', 
-						'R': 'ring finger', 'M': 'pinky', '1': 'thumb', '2': 'index finger', 
-						'3': 'middle finger', '4': 'ring finger', '5': 'pinky'}
-	}
+var create_key_test_block = function(choice) {
+	var keycode_lookup = {'B': 'thumb', 'Y': 'index finger', 'G': 'middle finger', 
+					'R': 'ring finger', 'M': 'pinky', '1': 'thumb', '2': 'index finger', 
+					'3': 'middle finger', '4': 'ring finger', '5': 'pinky'}
 	var finger = keycode_lookup[String.fromCharCode(choice)]
 	var instruct_text = "Please press your " + finger
 	if (finger == null) {
