@@ -75,7 +75,7 @@ var create_trigger_block = function(trigger) {
 
 // test response keys
 var create_key_test_block = function(choice) {
-	var keycode_lookup = {'B': 'right', 'Y': 'bottom', 'G': 'right', 
+	var keycode_lookup = {'B': 'right', 'Y': 'bottom', 'G': 'left', 
 					'R': 'up', 'M': 'center'}
 	var finger = keycode_lookup[String.fromCharCode(choice)]
 	var instruct_text = "Please press your " + finger
