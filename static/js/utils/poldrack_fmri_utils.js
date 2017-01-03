@@ -12,6 +12,9 @@ document.onkeypress = function(evt) {
 		trigger_times.push(time)
 	} else {
 		time = jsPsych.totalTime().toString();
+		if (which_key == ' ') {
+			which_key = 'space'
+		}
 		console.log(which_key, time)
 	}
 }
@@ -79,7 +82,7 @@ var create_key_test_block = function(choice) {
 					'R': 'up', 'M': 'center'}
 	var button = keycode_lookup[String.fromCharCode(choice)]
 	var instruct_text = "Please press the " + button + " button"
-	if (finger == null) {
+	if (button == null) {
 		instruct_text = "Wait for instructions from the experimenter."
 	}
 	var key_test_block = {
