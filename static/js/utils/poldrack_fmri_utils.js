@@ -76,12 +76,17 @@ var create_trigger_block = function(trigger) {
 	return fMRI_wait_block
 }
 
+var get_finger = function (choice) {
+	var keycode_lookup = {'B': 'thumb', 'Y': 'index', 'G': 'middle', 
+					'R': 'ring', 'M': 'pinky'}
+	var finger = keycode_lookup[String.fromCharCode(choice)]
+	return finger
+}
+
 // test response keys
 var create_key_test_block = function(choice) {
-	var keycode_lookup = {'B': 'right', 'Y': 'bottom', 'G': 'left', 
-					'R': 'up', 'M': 'center'}
-	var button = keycode_lookup[String.fromCharCode(choice)]
-	var instruct_text = "Please press the " + button + " button"
+	var button = get_finger(choice)
+	var instruct_text = "Please press your " + button + " finger"
 	if (button == null) {
 		instruct_text = "Wait for instructions from the experimenter."
 	}
