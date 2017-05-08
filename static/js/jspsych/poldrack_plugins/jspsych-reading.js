@@ -22,6 +22,7 @@ jsPsych.plugins.reading = (function() {
     trial = jsPsych.pluginAPI.evaluateFunctionParameters(trial);
 
     var current_page = 0;
+    var furthest_page = current_page;
 
     var view_history = [];
 
@@ -69,6 +70,7 @@ jsPsych.plugins.reading = (function() {
       add_current_page_to_view_history()
 
       current_page++;
+      furthest_page = current_page;
 
       // if done, finish up...
       if (current_page >= trial.pages.length) {
@@ -160,7 +162,8 @@ jsPsych.plugins.reading = (function() {
         "rt": info.rt,
         "key_press": info.key,
         "block_duration": block_duration,
-        "timing_post_trial": trial.timing_post_trial
+        "timing_post_trial": trial.timing_post_trial,
+        "furthest_page": furthest_page
       }
 
       jsPsych.finishTrial(trialdata);
