@@ -70,12 +70,13 @@ jsPsych.plugins.reading = (function() {
       add_current_page_to_view_history()
 
       current_page++;
-      furthest_page = current_page;
+
 
       // if done, finish up...
       if (current_page >= trial.pages.length) {
-        endTrial();
+        end_trial();
       } else {
+        furthest_page = current_page;
         show_current_page();
       }
 
@@ -104,22 +105,6 @@ jsPsych.plugins.reading = (function() {
       last_page_update_time = current_time;
     }
 
-    function endTrial() {
-
-      if (trial.allow_keys) {
-        jsPsych.pluginAPI.cancelKeyboardResponse(keyboard_listener);
-      }
-
-      display_element.html('');
-
-      var trial_data = {
-        "view_history": JSON.stringify(view_history),
-        "rt": (new Date()).getTime() - start_time
-      };
-
-      jsPsych.finishTrial(trial_data);
-    }
-
     var after_response = function(info) {
 
       // have to reinitialize this instead of letting it persist to prevent accidental skips of pages by holding down keys too long
@@ -140,34 +125,29 @@ jsPsych.plugins.reading = (function() {
       if (info.key === trial.key_forward || info.key === jsPsych.pluginAPI.convertKeyCharacterToKeyCode(trial.key_forward)) {
         next();
       }
-
     };
 
-    var end_trial = function(info) {
+    function end_trial() {
       clearTimeout(t1);
       display_element.html(''); // clear the display
 
-      if (typeof keyboardListener !== 'undefined') {
-        jsPsych.pluginAPI.cancelKeyboardResponse(keyboardListener);
+      if (trial.allow_keys) {
+        jsPsych.pluginAPI.cancelKeyboardResponse(keyboard_listener);
       }
 
+      // FIXME: this is always the maximum (rather than actual) duration
       var block_duration = trial.timing_response
-      if (info.rt != -1) {
-          block_duration = info.rt
-      }
 
-      // FIXME: store furthest page read?
       var trialdata = {
         "text": trial.text,
-        "rt": info.rt,
-        "key_press": info.key,
+        "rt": (new Date()).getTime() - start_time,
         "block_duration": block_duration,
         "timing_post_trial": trial.timing_post_trial,
-        "furthest_page": furthest_page
+        "furthest_page": furthest_page,
+        "view_history": JSON.stringify(view_history)
       }
 
       jsPsych.finishTrial(trialdata);
-
     };
 
     show_current_page();
@@ -184,10 +164,7 @@ jsPsych.plugins.reading = (function() {
   // end trial if time limit is set
     if (trial.timing_response > 0) {
       var t1 = setTimeout(function() {
-        end_trial({
-          key: -1,
-          rt: -1
-        });
+        end_trial();
       }, trial.timing_response);
     }
   };
