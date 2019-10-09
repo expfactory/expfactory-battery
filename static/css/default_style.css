@@ -82,6 +82,7 @@ body {
 .center-text {
   text-align:center;
   font-size: 60px;
+  line-height: 80px;
   position: relative;
   top: 50%;
   -ms-transform: translateY(-50%);
